@@ -1,13 +1,19 @@
 package com.example.demo.dao;
 
+import com.example.demo.bean.EmployeeDetails;
+import com.example.demo.bean.Manager;
+import com.sun.tools.javac.Main;
+import org.springframework.boot.web.servlet.server.Session;
+
+import javax.transaction.Transaction;
 import java.util.List;
 public class PersonalInfoDao {
-    public int hasregistered(AlumniDetails alumni){
+    public int hasregistered(EmployeeDetails employeeDetails){
         Session session = Main.getSession();
         Transaction transaction = session.beginTransaction();
-        alumni.setStudent(session.get(Student.class,alumni.getStudent().getId()));
-        Query fetchquery =session.createQuery("from AlumniDetails where student_id ="+alumni.getStudent().getId());
-        AlumniDetails temp = (AlumniDetails) fetchquery.uniqueResult();
+        employeeDetails.setManager(session.get(Manager.class,employeeDetails.getEmployee().getId()));
+        Query fetchquery =session.createQuery("from EmployeeDetails where manager_id ="+manager.getManager().getId());
+        EmployeeDetails temp = (EmployeeDetails) fetchquery.uniqueResult();
         transaction.commit();
         session.close();
         if(temp==null) {
@@ -19,12 +25,12 @@ public class PersonalInfoDao {
             return 0;
         }
     }
-    public void insertAlumniDetails(AlumniDetails alumni){
+    public void insertEmployeeDetails(EmployeeDetails employeeDetails){
         Session session = Main.getSession();
         Transaction transaction = session.beginTransaction();
-        alumni.setStudent(session.get(Student.class,alumni.getStudent().getId()));
+        employeeDetails.setManager(session.get(Manager.class,employeeDetails.getStudent().getId()));
 
-        session.save(alumni);
+        session.save(employeeDetails);
         transaction.commit();
         session.close();
     }

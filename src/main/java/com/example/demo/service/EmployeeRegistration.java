@@ -1,46 +1,49 @@
 package com.example.demo.service;
+import com.example.demo.bean.EmployeeDetails;
 import com.example.demo.bean.EmployeeEducation;
+import com.example.demo.bean.EmployeeOrganization;
+import com.example.demo.dao.EmployeeInfoDao;
 import com.example.demo.dao.OrganizationInfoDao;
 import com.example.demo.dao.PersonalInfoDao;
 
 import java.util.List;
 
 public class EmployeeRegistration {
-    EInfoDAO eInfoDAO = new EInfoDAO();
-    PInfoDAO pInfoDAO = new PInfoDAO();
-    OInfoDAO oInfoDAO = new OInfoDAO();
-    public void seteInfoDAO(EInfoDAO eInfoDAO){
-        this.eInfoDAO = eInfoDAO;
+    EmployeeInfoDao employeeInfoDao = new EmployeeInfoDao();
+    PersonalInfoDao personalInfoDao = new PersonalInfoDao();
+    OrganizationInfoDao organizationInfoDao = new OrganizationInfoDao();
+    public void seteInfoDAO(EmployeeInfoDao employeeInfoDao){
+        this.employeeInfoDao = employeeInfoDao;
     }
-    public void setEmployeeInfoDao(PersonalInfoDao pInfoDAO){ this.pInfoDAO = pInfoDAO; }
-    public void setOrganizationInfoDAO(OrganizationInfoDao oInfoDAO){ this.oInfoDAO=oInfoDAO;}
+    public void setEmployeeInfoDao(PersonalInfoDao personalInfoDao){ this.personalInfoDao = personalInfoDao; }
+    public void setOrganizationInfoDAO(OrganizationInfoDao organizationInfoDao){ this.organizationInfoDao=organizationInfoDao;}
 
-    public int insert_pinfo(AlumniDetails alumni){
+    public int insertPersonalinfo(EmployeeDetails employeeDetails){
         System.out.println("Service Layer hit");
-        int returnvalue= pInfoDAO.hasregistered(alumni);
+        int returnvalue= personalInfoDao.hasregistered(employeeDetails);
         System.out.println(returnvalue);
         if(returnvalue==1){
-            pInfoDAO.insertAlumniDetails(alumni);
+            personalInfoDao.insertEmployeeDetails(employeeDetails);
             return 1;
         }
         else
             return -1;
     }
 
-    public int insert_einfo(List<EmployeeEducation> edetails){
+    public int insertEmployeeinfo(List<EmployeeEducation> employeeEducations){
 
-        int returnvalue = eInfoDAO.hasregistered(edetails.get(0).getAlumni().getId());
+        int returnvalue = employeeInfoDao.hasregistered(employeeEducations.get(0).getEmployee().getId());
         if(returnvalue==0){
             return -1;
         }
-        eInfoDAO.insertAlumniEducationDetails(edetails);
+        employeeInfoDao.insertEmployeeEducationDetails(employeeEducations);
         return  1;
 
     }
 
-    public int insertOrganizationinfo(List<AlumniOrganisation> odetails){
+    public int insertOrganizationinfo(List<EmployeeOrganization> odetails){
 
-        oInfoDAO.insertAlumniOrganisationDetails(odetails);
+        organizationInfoDao.insertEmployeeOrganisationDetails(employeeInfoDao);
         return  1;
 
     }

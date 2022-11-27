@@ -1,5 +1,13 @@
 package com.example.demo.dao;
 
+import com.example.demo.bean.EmployeeDetails;
+import com.example.demo.bean.EmployeeOrganization;
+import com.example.demo.bean.Organisation;
+import com.sun.tools.javac.Main;
+import org.springframework.boot.web.servlet.server.Session;
+
+import javax.management.Query;
+import javax.transaction.Transaction;
 import java.util.List;
 
 public class OrganizationInfoDao {
@@ -13,15 +21,16 @@ public class OrganizationInfoDao {
         return companylist;
     }
 
-    public int insertAlumniOrganisationDetails(List<AlumniOrganisation> odetails){
+    public int insertEmployeeOrganisationDetails(List<EmployeeOrganization> organizationDetails){
         Session session = Main.getSession();
         Transaction transaction = session.beginTransaction();
-        for(AlumniOrganisation odetail:odetails){
-            odetail.setAlumni(session.get(AlumniDetails.class,odetail.getAlumni().getId()));
-            Query fetchquery =session.createQuery("from Organisation where name='"+odetail.getOrganisation().getName()+"'" );
+        for(EmployeeOrganization organizationDetail:organizationDetails){
+            organizationDetail.setEmployee(session.get(EmployeeDetails.class,organizationDetail.getEmployee().getId()));
+            Query fetchquery =session.createQuery("from Organisation where name='"+organizationDetail.getOrganisation().getName()+"'" );
+
             Organisation org = (Organisation) fetchquery.uniqueResult();
-            odetail.setOrganisation(org);
-            session.save(odetail);
+            organizationDetail.setOrganisation(org);
+            session.save(organizationDetail);
         }
 
         transaction.commit();
