@@ -1,4 +1,8 @@
 package com.example.demo.controller;
+import com.example.demo.bean.EmployeeDetails;
+import com.example.demo.dao.PersonalInfoDao;
+import com.example.demo.service.EmployeeRegistration;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -7,28 +11,28 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URISyntaxException;
 
-@Path("pinfo")
+@Path("PersonalInfo")
 public class PersonalInformationController {
-    AlumniRegistration alumniRegistration = new AlumniRegistration();
+    EmployeeRegistration employeeRegistration = new EmployeeRegistration();
 
-    public void setAlumniRegistration(PInfoDAO pInfoDAO){
-        alumniRegistration.setpInfoDAO(pInfoDAO);
+    public void setEmployeeRegistration(PersonalInfoDao pInfoDAO){
+        employeeRegistration.setEmployeeInfoDao(pInfoDAO);
     }
 
     @POST
     @Path("/register")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response registerAlumni(AlumniDetails alumni) throws URISyntaxException {
-        System.out.println(alumni.getStudent().getId());
-        System.out.println(alumni.getEmail());
-        System.out.println(alumni.getContact());
+    public Response registerAlumni(EmployeeDetails employee) throws URISyntaxException {
+        System.out.println(employee.getStudent().getId());
+        System.out.println(employee.getEmail());
+        System.out.println(employee.getContact());
 
-        int returnvalue=alumniRegistration.insert_pinfo(alumni);
+        int returnvalue=employeeRegistration.insert_pinfo(employee);
         if(returnvalue==1)
-            return Response.ok().entity(alumni).build();
+            return Response.ok().entity(employee).build();
         else
-            return Response.status(409).entity(alumni).build();
+            return Response.status(409).entity(employee).build();
 
 
     }

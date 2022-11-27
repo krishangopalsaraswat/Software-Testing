@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.bean.EmployeeEducation;
 import com.example.demo.dao.EmployeeInfoDao;
 import com.example.demo.service.EmployeeRegistration;
 
@@ -12,7 +13,7 @@ import javax.ws.rs.core.Response;
 import java.net.URISyntaxException;
 import java.util.List;
 
-@Path("einfo")
+@Path("employeeInfo")
 public class EmployeeController {
     //changes done
     EmployeeRegistration employeeRegistration = new EmployeeRegistration();
@@ -25,24 +26,22 @@ public class EmployeeController {
     @Path("/register")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response registerEducationDetails(List<AlumniEducation> edetails) throws URISyntaxException {
-        if(employeeDetails.get(0).getCollege_name()==""){
+    public Response registerEducationDetails(List<EmployeeEducation> employeeEducations) throws URISyntaxException {
+        if(employeeEducations.get(0).getCollege_name()==""){
             return Response.status(204).build();
-
         }
-        System.out.println(edetails.get(0).getAlumni().getId());
-        System.out.println(edetails.get(0).getCollege_name());
-        System.out.println(edetails.get(0).getAddress());
-        System.out.println(edetails.get(0).getJoining_year());
+        System.out.println(employeeEducations.get(0).getEmployee().getId());
+        System.out.println(employeeEducations.get(0).getAddress());
+        System.out.println(employeeEducations.get(0).getJoining_year());
 
 
-        int returnvalue=employeeRegistration.insert_einfo(edetails);
+        int returnvalue=employeeRegistration.insert_einfo(employeeEducations);
         if(returnvalue==1)
             return Response.ok().build();
         else
             return Response.status(409).build();
 
-        //return  Response.ok().entity(edetails).build();
+
 
 
     }

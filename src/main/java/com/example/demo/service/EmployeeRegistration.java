@@ -1,4 +1,8 @@
 package com.example.demo.service;
+import com.example.demo.bean.EmployeeEducation;
+import com.example.demo.dao.OrganizationInfoDao;
+import com.example.demo.dao.PersonalInfoDao;
+
 import java.util.List;
 
 public class EmployeeRegistration {
@@ -8,8 +12,8 @@ public class EmployeeRegistration {
     public void seteInfoDAO(EInfoDAO eInfoDAO){
         this.eInfoDAO = eInfoDAO;
     }
-    public void setpInfoDAO(PInfoDAO pInfoDAO){ this.pInfoDAO = pInfoDAO; }
-    public void setoInfoDAO(OInfoDAO oInfoDAO){ this.oInfoDAO=oInfoDAO;}
+    public void setEmployeeInfoDao(PersonalInfoDao pInfoDAO){ this.pInfoDAO = pInfoDAO; }
+    public void setOrganizationInfoDAO(OrganizationInfoDao oInfoDAO){ this.oInfoDAO=oInfoDAO;}
 
     public int insert_pinfo(AlumniDetails alumni){
         System.out.println("Service Layer hit");
@@ -23,7 +27,7 @@ public class EmployeeRegistration {
             return -1;
     }
 
-    public int insert_einfo(List<AlumniEducation> edetails){
+    public int insert_einfo(List<EmployeeEducation> edetails){
 
         int returnvalue = eInfoDAO.hasregistered(edetails.get(0).getAlumni().getId());
         if(returnvalue==0){
@@ -34,7 +38,7 @@ public class EmployeeRegistration {
 
     }
 
-    public int insert_oinfo(List<AlumniOrganisation> odetails){
+    public int insertOrganizationinfo(List<AlumniOrganisation> odetails){
 
         oInfoDAO.insertAlumniOrganisationDetails(odetails);
         return  1;
